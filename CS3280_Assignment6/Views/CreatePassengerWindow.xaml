@@ -5,8 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CS3280_Assignment6.Views"
         mc:Ignorable="d"
-        Title="CreatePassengerWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="CreatePassengerWindow" 
+        Height="Auto" Width="Auto" d:DesignWidth="342" d:DesignHeight="243.4">
+    <Grid Height="Auto" Width="Auto">
+        <Grid HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <StackPanel Margin="10">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                    <Label Content="First Name:" FontSize="15"/>
+                    <TextBox x:Name="FirstName" Width="150"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                    <Label Content="Last Name:" FontSize="15"/>
+                    <TextBox x:Name="LastName" Width="150"/>
+                </StackPanel>
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="Save" Content="SAVE" 
+                            FontSize="12" FontWeight="Bold"
+                            Padding="5"
+                            Grid.Column="0"/>
+                    
+                    <Button x:Name="Cancel" Content="CANCEL"
+                            FontSize="12" FontWeight="Bold"
+                            Padding="5"
+                            Grid.Column="2"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
