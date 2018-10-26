@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CS3280_Assignment6
+namespace CS3280_Assignment6.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
