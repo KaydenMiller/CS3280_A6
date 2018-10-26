@@ -58,8 +58,13 @@
     <Compile Include="Custom Controls\SeatingGrid.xaml.cs">
       <DependentUpon>SeatingGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Seat.xaml.cs">
+    <Compile Include="Models\Passenger.cs" />
+    <Compile Include="Custom Controls\Seat.xaml.cs">
       <DependentUpon>Seat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\PassengerViewModel.cs" />
+    <Compile Include="Views\CreatePassengerWindow.xaml.cs">
+      <DependentUpon>CreatePassengerWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -77,7 +82,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Seat.xaml">
+    <Page Include="Custom Controls\Seat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreatePassengerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -108,5 +117,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
