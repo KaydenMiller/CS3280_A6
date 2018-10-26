@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace CS3280_Assignment6
 {
     /// <summary>
-    /// Interaction logic for SeatingGrid.xaml
+    /// Interaction logic for Seat.xaml
     /// </summary>
-    public partial class SeatingGrid : UserControl
+    public partial class Seat : UserControl
     {
-        public SeatingGrid()
+        public Seat()
         {
             InitializeComponent();
         }

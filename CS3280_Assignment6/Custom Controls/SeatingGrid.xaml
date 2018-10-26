@@ -6,13 +6,34 @@
              xmlns:local="clr-namespace:CS3280_Assignment6"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="title_textblock_style" TargetType="{x:Type TextBlock}">
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="TextTrimming" Value="None"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="35"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="TextDecorations" Value="Underline"/>
+        </Style>
+    </UserControl.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <!-- Aircraft title & information -->
-        <TextBlock x:Name="AircraftTitle" Text="747"/>
+        <TextBlock x:Name="AircraftTitle" Text="747" Style="{DynamicResource title_textblock_style}"/>
+
+        <Grid Grid.Row="1">
+            <StackPanel x:Name="SeatColumnStack" Orientation="Horizontal">
+                <!-- Add Seat Columns Here Programatialy -->
+                <StackPanel x:Name="SeatCol1">
+                    <!-- Add Seats Here Programaticaly -->
+                    <local:Seat Height="75" Width="75"
+                                Margin="10"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
