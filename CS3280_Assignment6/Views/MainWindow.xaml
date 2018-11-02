@@ -24,67 +24,12 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="481*"/>
-            <ColumnDefinition Width="467*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
 
-            <TextBlock x:Name="AircraftTitle" Text="747" Style="{DynamicResource title_textblock_style}"/>
+        <air:SeatingGrid x:Name="SeatingGrid"/> 
 
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-
-
-                <air:Seat Grid.Column="0" Style="{DynamicResource aircraft_seat_style}"/>
-                <air:Seat Grid.Column="1" Style="{DynamicResource aircraft_seat_style}"/>
-
-                <air:Seat Grid.Column="3" Style="{DynamicResource aircraft_seat_style}"/>
-                <air:Seat Grid.Column="4" Style="{DynamicResource aircraft_seat_style}"/>
-
-                <Rectangle Fill="Black" Height="2"
-                           Grid.ColumnSpan="5" Grid.Row="1"
-                           Margin="10 0"/>
-
-                <StackPanel Grid.Column="0" Grid.Row="2">
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Grid.Row="2">
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="3" Grid.Row="2">
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                </StackPanel>
-                <StackPanel Grid.Column="4" Grid.Row="2">
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                    <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                </StackPanel>
-            </Grid>
-        </Grid>
-        
         <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

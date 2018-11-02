@@ -58,11 +58,15 @@
     <Compile Include="Custom Controls\SeatingGrid.xaml.cs">
       <DependentUpon>SeatingGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Aircraft.cs" />
     <Compile Include="Models\Passenger.cs" />
     <Compile Include="Custom Controls\Seat.xaml.cs">
       <DependentUpon>Seat.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Seat.cs" />
+    <Compile Include="Utilities\OperationResult.cs" />
     <Compile Include="ViewModels\PassengerViewModel.cs" />
+    <Compile Include="ViewModels\SeatingGridViewModel.cs" />
     <Compile Include="Views\CreatePassengerWindow.xaml.cs">
       <DependentUpon>CreatePassengerWindow.xaml</DependentUpon>
     </Compile>
