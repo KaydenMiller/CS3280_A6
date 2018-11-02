@@ -16,7 +16,7 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="TextDecorations" Value="Underline"/>
         </Style>
-        <Style x:Key="aircraft_seat_style" TargetType="{x:Type air:Seat}">
+        <Style x:Key="aircraft_seat_style" TargetType="{x:Type air:SeatControl}">
             <Setter Property="Height" Value="75"/>
             <Setter Property="Width" Value="75"/>
             <Setter Property="Margin" Value="10"/>

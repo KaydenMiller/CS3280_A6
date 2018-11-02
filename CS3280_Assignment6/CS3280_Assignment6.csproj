@@ -60,8 +60,8 @@
     </Compile>
     <Compile Include="Models\Aircraft.cs" />
     <Compile Include="Models\Passenger.cs" />
-    <Compile Include="Custom Controls\Seat.xaml.cs">
-      <DependentUpon>Seat.xaml</DependentUpon>
+    <Compile Include="Custom Controls\SeatControl.xaml.cs">
+      <DependentUpon>SeatControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Seat.cs" />
     <Compile Include="Utilities\OperationResult.cs" />
@@ -86,7 +86,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Custom Controls\Seat.xaml">
+    <Page Include="Custom Controls\SeatControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

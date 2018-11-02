@@ -23,6 +23,20 @@ namespace CS3280_Assignment6.Views
         public MainWindow()
         {
             InitializeComponent();
+            ConfigureWindow();
+        }
+
+        private void ConfigureWindow()
+        {
+            SeatingGrid.SeatingGridViewModel = new ViewModels.SeatingGridViewModel(new Models.Aircraft
+            {
+                ID = 0,
+                TaleNumber = "747",
+                TotalSeats = 12,
+                Columns = 4,
+                Aisles = 1
+            });
+            SeatingGrid.UpdateView();
         }
     }
 }

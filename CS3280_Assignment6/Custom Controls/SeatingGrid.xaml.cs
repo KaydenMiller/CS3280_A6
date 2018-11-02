@@ -29,11 +29,16 @@ namespace CS3280_Assignment6.CustomControls
             InitializeComponent();
         }
 
-        public SeatingGrid(SeatingGridViewModel seatingGridViewModel)
+        public void UpdateView()
         {
-            InitializeComponent();
-
-            SeatingGridViewModel = seatingGridViewModel;
+            var result = GenerateView();
+            if (result.Result == OperationResultValue.Failure)
+            {
+                string message = "";
+                foreach (string msg in result.Messages)
+                    message += $" {msg}";
+                throw new Exception(message);
+            }
         }
 
         private OperationResult GenerateView()
@@ -47,40 +52,65 @@ namespace CS3280_Assignment6.CustomControls
                 return operationResult;
             }
 
+            // Set Aircraft title
+            AircraftTitle.Text = SeatingGridViewModel.Aircraft.TaleNumber;
+
+            // Generate Seating Grid
             GenerateColumns(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles);
-            GenerateSeats(SeatingGridViewModel.Aircraft.Columns);
+            GenerateAisles(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles);
+            GenerateSeats(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles, SeatingGridViewModel.Aircraft.Seats);
+            
 
             operationResult.Result = OperationResultValue.Success;
             return operationResult;
         }
 
-        private void GenerateSeats(int cols)
+        private void GenerateSeats(int cols, int aisles, List<Models.Seat> seats)
         {
+            int seatsInCol = seats.Count / cols;
+
             for (int column = 0; column < cols; column++)
             {
-                Seat seat = new Seat();
-                
+                StackPanel stackPanel = new StackPanel();
+
+                for (int seat = column * seatsInCol; seat < (column + 1) * seatsInCol; seat++)
+                {
+                    SeatControl seatControl = new SeatControl();
+                    seatControl.Seat = seats[seat];
+                    seatControl.Style = Resources["aircraft_seat_style"] as Style;
+
+                    stackPanel.Children.Add(seatControl);
+                }
+                // Column becomes wrong after cols / aisles
+                Grid.SetColumn(stackPanel, column);
+                SeatingLayoutGrid.Children.Add(stackPanel);
             }
         }
 
         private void GenerateColumns(int cols, int aisles)
         {
-            for (int column = 0; column < cols + aisles; column++)
+            for (int column = 0; column < cols; column++)
             {
                 ColumnDefinition colDef = new ColumnDefinition();
-                GridLength gridLength;
-
-                if ((cols / 2) + 1 == column)
-                {
-                    gridLength = new GridLength(1, GridUnitType.Star);
-                }
-                else
-                {
-                    gridLength = new GridLength(1, GridUnitType.Auto);
-                }
+                GridLength gridLength = new GridLength(1, GridUnitType.Auto);
 
                 colDef.Width = gridLength;
                 SeatingLayoutGrid.ColumnDefinitions.Add(colDef);
+            }
+        }
+
+        private void GenerateAisles(int cols, int aisles)
+        {
+            ColumnDefinition colDef = new ColumnDefinition();
+            GridLength gridLength = new GridLength(1, GridUnitType.Star);
+            colDef.Width = gridLength;
+
+            int colsPerAisle = cols / (aisles + 1);
+
+
+            for (int pos = colsPerAisle; pos < cols; pos += colsPerAisle)
+            {
+                SeatingLayoutGrid.ColumnDefinitions.Insert(2, colDef);
             }
         }
     }

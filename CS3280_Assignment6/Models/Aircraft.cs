@@ -25,7 +25,7 @@ namespace CS3280_Assignment6.Models
         public int Columns { get; set; }
         public int Aisles { get; set; }
 
-        public List<Seat> Seats { get; private set; }
+        public List<Seat> Seats { get; private set; } = new List<Seat>();
 
         private void CreateSeats(int seatsToCreate)
         {

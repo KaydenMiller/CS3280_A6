@@ -15,7 +15,7 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="TextDecorations" Value="Underline"/>
         </Style>
-        <Style x:Key="aircraft_seat_style" TargetType="{x:Type air:Seat}">
+        <Style x:Key="aircraft_seat_style" TargetType="{x:Type air:SeatControl}">
             <Setter Property="Height" Value="75"/>
             <Setter Property="Width" Value="75"/>
             <Setter Property="Margin" Value="10"/>
@@ -27,9 +27,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="AircraftTitle" Text="747" Style="{DynamicResource title_textblock_style}"/>
+        <TextBlock x:Name="AircraftTitle" Text="TEST" Style="{DynamicResource title_textblock_style}"/>
 
         <Grid x:Name="SeatingLayoutGrid" Grid.Row="1">
+            <!-- This is what it should look like when it is done -->
+            <!-- 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -45,37 +47,38 @@
 
 
 
-            <air:Seat Grid.Column="0" Style="{DynamicResource aircraft_seat_style}"/>
-            <air:Seat Grid.Column="1" Style="{DynamicResource aircraft_seat_style}"/>
+            <air:SeatControl Grid.Column="0" Style="{DynamicResource aircraft_seat_style}"/>
+            <air:SeatControl Grid.Column="1" Style="{DynamicResource aircraft_seat_style}"/>
 
-            <air:Seat Grid.Column="3" Style="{DynamicResource aircraft_seat_style}"/>
-            <air:Seat Grid.Column="4" Style="{DynamicResource aircraft_seat_style}"/>
+            <air:SeatControl Grid.Column="3" Style="{DynamicResource aircraft_seat_style}"/>
+            <air:SeatControl Grid.Column="4" Style="{DynamicResource aircraft_seat_style}"/>
 
             <Rectangle Fill="Black" Height="2"
                            Grid.ColumnSpan="5" Grid.Row="1"
                            Margin="10 0"/>
 
             <StackPanel Grid.Column="0" Grid.Row="2">
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="2">
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
             </StackPanel>
 
             <StackPanel Grid.Column="3" Grid.Row="2">
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
             </StackPanel>
             <StackPanel Grid.Column="4" Grid.Row="2">
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
-                <air:Seat Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
+                <air:SeatControl Style="{DynamicResource aircraft_seat_style}"/>
             </StackPanel>
+            -->
         </Grid>
     </Grid>
 </UserControl>
