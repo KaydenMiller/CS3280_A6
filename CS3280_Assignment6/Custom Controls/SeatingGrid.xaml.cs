@@ -67,11 +67,18 @@ namespace CS3280_Assignment6.CustomControls
 
         private void GenerateSeats(int cols, int aisles, List<Models.Seat> seats)
         {
-            int seatsInCol = seats.Count / cols;
+            int seatsInCol = seats.Count / cols + 1;
+            int colsPerAisle = cols / aisles;
+            int aisleOffset = 0;
 
             for (int column = 0; column < cols; column++)
             {
                 StackPanel stackPanel = new StackPanel();
+
+                //if (column % colsPerAisle == 0 && column != 0)
+                //{
+                //    aisleOffset++;
+                //}
 
                 for (int seat = column * seatsInCol; seat < (column + 1) * seatsInCol; seat++)
                 {
@@ -82,7 +89,7 @@ namespace CS3280_Assignment6.CustomControls
                     stackPanel.Children.Add(seatControl);
                 }
                 // Column becomes wrong after cols / aisles
-                Grid.SetColumn(stackPanel, column);
+                Grid.SetColumn(stackPanel, column + aisleOffset);
                 SeatingLayoutGrid.Children.Add(stackPanel);
             }
         }
