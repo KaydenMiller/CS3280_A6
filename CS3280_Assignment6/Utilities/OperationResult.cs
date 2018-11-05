@@ -14,7 +14,7 @@ namespace CS3280_Assignment6.Utilities
 
     public class OperationResult
     {
-        public List<string> Messages { get; private set; }
+        public List<string> Messages { get; private set; } = new List<string>();
         public OperationResultValue Result { get; set; }
 
         public void AddMessage(string message)

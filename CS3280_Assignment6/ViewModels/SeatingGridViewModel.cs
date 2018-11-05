@@ -7,13 +7,18 @@ using CS3280_Assignment6.Models;
 
 namespace CS3280_Assignment6.ViewModels
 {
-    public class SeatingGridViewModel
+    public class SeatingGridViewModel : ViewModelBase
     {
-        public Aircraft Aircraft { get; set; } = null;
-
-        public SeatingGridViewModel(Aircraft aircraft)
+        private Aircraft _aircraft;
+        public Aircraft Aircraft
         {
-            Aircraft = aircraft;
+            get => _aircraft;
+            set => SetProperty(ref _aircraft, value);
+        }
+
+        public string AircraftTaleNumber
+        {
+            get => Aircraft.TaleNumber;
         }
     }
 }

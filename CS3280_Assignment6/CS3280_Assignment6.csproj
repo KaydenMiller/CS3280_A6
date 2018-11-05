@@ -59,14 +59,18 @@
       <DependentUpon>SeatingGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Aircraft.cs" />
+    <Compile Include="Models\Flight.cs" />
     <Compile Include="Models\Passenger.cs" />
     <Compile Include="Custom Controls\SeatControl.xaml.cs">
       <DependentUpon>SeatControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Seat.cs" />
+    <Compile Include="Repositories\FlightRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Utilities\OperationResult.cs" />
     <Compile Include="ViewModels\PassengerViewModel.cs" />
     <Compile Include="ViewModels\SeatingGridViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\CreatePassengerWindow.xaml.cs">
       <DependentUpon>CreatePassengerWindow.xaml</DependentUpon>
     </Compile>

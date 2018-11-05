@@ -27,7 +27,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="AircraftTitle" Text="TEST" Style="{DynamicResource title_textblock_style}"/>
+        <TextBlock x:Name="AircraftTitle" Text="{Binding AircraftTaleNumber}" Style="{DynamicResource title_textblock_style}"/>
 
         <Grid x:Name="SeatingLayoutGrid" Grid.Row="1">
             <!-- This is what it should look like when it is done -->

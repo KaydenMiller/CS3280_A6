@@ -2,6 +2,7 @@
 using CS3280_Assignment6.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,15 +23,26 @@ namespace CS3280_Assignment6.CustomControls
     /// </summary>
     public partial class SeatingGrid : UserControl
     {
-        public SeatingGridViewModel SeatingGridViewModel { get; set; }
+        private SeatingGridViewModel SeatingGridViewModel { get; set; }
 
         public SeatingGrid()
         {
             InitializeComponent();
+
+            DataContextChanged += OnDataContextChanged;
         }
 
-        public void UpdateView()
+        public void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            // Cast Datacontext to Seating Grid View Model
+            SeatingGridViewModel = (DataContext as Views.MainWindow).SeatingGridViewModel;
+
+            SeatingGridViewModel.PropertyChanged += UpdateView;
+        }
+
+        public void UpdateView(object sender, PropertyChangedEventArgs e)
+        {
+            ClearData();
             var result = GenerateView();
             if (result.Result == OperationResultValue.Failure)
             {
@@ -41,16 +53,25 @@ namespace CS3280_Assignment6.CustomControls
             }
         }
 
+        private void ClearData()
+        {
+            SeatingLayoutGrid.ColumnDefinitions.Clear();
+            SeatingLayoutGrid.Children.Clear();
+        }
+
         private OperationResult GenerateView()
         {
             OperationResult operationResult = new OperationResult();
 
-            if (SeatingGridViewModel == null)
+            if (DataContext == null)
             {
                 operationResult.Result = OperationResultValue.Failure;
                 operationResult.Messages.Add("Empty Seating Grid View Model.");
                 return operationResult;
             }
+
+            // Cast Datacontext to Seating Grid View Model
+            SeatingGridViewModel = (DataContext as Views.MainWindow).SeatingGridViewModel;
 
             // Set Aircraft title
             AircraftTitle.Text = SeatingGridViewModel.Aircraft.TaleNumber;
@@ -59,7 +80,6 @@ namespace CS3280_Assignment6.CustomControls
             GenerateColumns(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles);
             GenerateAisles(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles);
             GenerateSeats(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles, SeatingGridViewModel.Aircraft.Seats);
-            
 
             operationResult.Result = OperationResultValue.Success;
             return operationResult;
@@ -67,18 +87,18 @@ namespace CS3280_Assignment6.CustomControls
 
         private void GenerateSeats(int cols, int aisles, List<Models.Seat> seats)
         {
-            int seatsInCol = seats.Count / cols + 1;
-            int colsPerAisle = cols / aisles;
+            int seatsInCol = (seats.Count / cols);
+            int colsPerAisle = cols / (aisles + 1);
             int aisleOffset = 0;
 
             for (int column = 0; column < cols; column++)
             {
                 StackPanel stackPanel = new StackPanel();
 
-                //if (column % colsPerAisle == 0 && column != 0)
-                //{
-                //    aisleOffset++;
-                //}
+                if (column % colsPerAisle == 0 && column != 0)
+                {
+                    aisleOffset++;
+                }
 
                 for (int seat = column * seatsInCol; seat < (column + 1) * seatsInCol; seat++)
                 {
@@ -88,6 +108,7 @@ namespace CS3280_Assignment6.CustomControls
 
                     stackPanel.Children.Add(seatControl);
                 }
+
                 // Column becomes wrong after cols / aisles
                 Grid.SetColumn(stackPanel, column + aisleOffset);
                 SeatingLayoutGrid.Children.Add(stackPanel);

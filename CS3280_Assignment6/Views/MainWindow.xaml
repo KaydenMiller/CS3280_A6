@@ -40,19 +40,18 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+            <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="10">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
                     <Label Content="Choose Flight:" FontSize="20"/>
-                    <ComboBox x:Name="cbxFlight" Width="150" FontSize="20">
-                        <ComboBoxItem>747</ComboBoxItem>
-                        <ComboBoxItem>654</ComboBoxItem>
-                    </ComboBox>
+                    <ComboBox x:Name="cbxFlight" Width="150" FontSize="20"
+                              ItemsSource="{Binding Aircraft}"
+                              DisplayMemberPath="TaleNumber"
+                              SelectedItem="{Binding SelectedAircraft}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
                     <Label Content="Choose Passenger:" FontSize="20"/>
-                    <ComboBox x:Name="cbxPassenger" Width="150" FontSize="20">
-                    </ComboBox>
+                    <ComboBox x:Name="cbxPassenger" Width="150" FontSize="20"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
