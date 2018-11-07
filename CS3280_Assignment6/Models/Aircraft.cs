@@ -8,7 +8,8 @@ using CS3280_Assignment6.Utilities;
 namespace CS3280_Assignment6.Models
 {
     public class Aircraft
-    {   private int _totalSeats { get; set; }
+    {
+        private int _totalSeats { get; set; }
 
         public int ID { get; set; }
         public string TaleNumber { get; set; }
