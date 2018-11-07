@@ -27,7 +27,14 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="AircraftTitle" Text="{Binding AircraftTaleNumber}" Style="{DynamicResource title_textblock_style}"/>
+        <TextBlock x:Name="AircraftTitle" Style="{DynamicResource title_textblock_style}">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}, {1}">
+                    <Binding Path="Aircraft_Flight_ID" />
+                    <Binding Path="Aircraft_Flight_Number" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
 
         <Grid x:Name="SeatingLayoutGrid" Grid.Row="1">
             <!-- This is what it should look like when it is done -->

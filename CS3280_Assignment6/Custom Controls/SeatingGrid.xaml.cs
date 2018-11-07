@@ -74,7 +74,7 @@ namespace CS3280_Assignment6.CustomControls
             SeatingGridViewModel = (DataContext as Views.MainWindow).SeatingGridViewModel;
 
             // Set Aircraft title
-            AircraftTitle.Text = SeatingGridViewModel.Aircraft.TaleNumber;
+            AircraftTitle.Text = $"{SeatingGridViewModel.Aircraft.FlightInfo.Flight_Number}, {SeatingGridViewModel.Aircraft.FlightInfo.Aircraft_Type}";
 
             // Generate Seating Grid
             GenerateColumns(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles);

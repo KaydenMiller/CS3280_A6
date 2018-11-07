@@ -13,14 +13,26 @@ namespace CS3280_Assignment6.Controllers
         private static FakeFlightRepository _flightRepository = new FakeFlightRepository();
         private static FakePassengerRepository _fakePassengerRepository = new FakePassengerRepository();
 
-        private static void AddFlight(Flight flight)
+        // Flight Methods
+        public static void AddFlight(Flight flight)
         {
             _flightRepository.Add(flight);
         }
 
-        private static IEnumerable<Flight> GetAllFlights()
+        public static IEnumerable<Flight> GetAllFlights()
         {
             return _flightRepository.FindAll();
+        }
+
+        // Passenger Methods
+        public static void AddPassenger(Passenger passenger)
+        {
+            _fakePassengerRepository.Add(passenger);
+        }
+
+        public static IEnumerable<Passenger> GetAllPassengers()
+        {
+            return _fakePassengerRepository.FindAll();
         }
     }
 }

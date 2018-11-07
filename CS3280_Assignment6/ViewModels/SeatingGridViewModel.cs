@@ -16,9 +16,14 @@ namespace CS3280_Assignment6.ViewModels
             set => SetProperty(ref _aircraft, value);
         }
 
-        public string AircraftTaleNumber
+        public string Aircraft_Flight_ID
         {
-            get => Aircraft.TaleNumber;
+            get => Aircraft.FlightInfo.Flight_ID.ToString();
+        }
+
+        public string Aircraft_Flight_Number
+        {
+            get => Aircraft.FlightInfo.Flight_Number.ToString();
         }
     }
 }

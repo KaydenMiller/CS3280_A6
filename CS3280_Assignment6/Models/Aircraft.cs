@@ -9,25 +9,32 @@ namespace CS3280_Assignment6.Models
 {
     public class Aircraft
     {
-        private int _totalSeats { get; set; }
-
         public int ID { get; set; }
-        public string TaleNumber { get; set; }
 
-        public int TotalSeats
-        {
-            get { return _totalSeats; }
-            set
-            {
-                _totalSeats = value;
-                CreateSeats(_totalSeats);
-            }
-        }
+        public Flight FlightInfo { get; set; }
+        public List<Passenger> Passengers { get; set; }
+
+        public int TotalSeats { get; }
         public int Columns { get; set; }
         public int Aisles { get; set; }
 
         public List<Seat> Seats { get; private set; } = new List<Seat>();
 
+        public Aircraft(Flight flight, int seats, int cols, int aisles)
+        {
+            FlightInfo = flight;
+            TotalSeats = seats;
+            Columns = cols;
+            Aisles = aisles;
+
+            CreateSeats(seats);
+        }
+
+        public void AddPassenger(Passenger passenger)
+        {
+            Passengers.Add(passenger);
+        }
+        
         private void CreateSeats(int seatsToCreate)
         {
             for (int seat = 0; seat < seatsToCreate; seat++)
@@ -35,7 +42,6 @@ namespace CS3280_Assignment6.Models
                 Seats.Add(new Seat(seat, SeatStatus.Empty));
             }
         }
-
         public OperationResult UpdateSeat(int id, SeatStatus status)
         {
             var query =
