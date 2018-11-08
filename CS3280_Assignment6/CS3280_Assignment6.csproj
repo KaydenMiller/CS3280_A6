@@ -59,6 +59,7 @@
     <Compile Include="Custom Controls\SeatingGrid.xaml.cs">
       <DependentUpon>SeatingGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data Access\DataAccess.cs" />
     <Compile Include="Models\Aircraft.cs" />
     <Compile Include="Models\Flight.cs" />
     <Compile Include="Models\Passenger.cs" />
@@ -69,9 +70,11 @@
     <Compile Include="Repositories\FakeFlightRepository.cs" />
     <Compile Include="Repositories\FakePassengerRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Utilities\IndexToBoolConverter.cs" />
     <Compile Include="Utilities\OperationResult.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SeatingGridViewModel.cs" />
+    <Compile Include="ViewModels\SeatViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\CreatePassengerWindow.xaml.cs">
       <DependentUpon>CreatePassengerWindow.xaml</DependentUpon>

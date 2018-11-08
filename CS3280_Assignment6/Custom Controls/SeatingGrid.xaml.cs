@@ -35,7 +35,7 @@ namespace CS3280_Assignment6.CustomControls
         public void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             // Cast Datacontext to Seating Grid View Model
-            SeatingGridViewModel = (DataContext as Views.MainWindow).SeatingGridViewModel;
+            SeatingGridViewModel = (DataContext as MainWindowViewModel).SeatingGridViewModel;
 
             SeatingGridViewModel.PropertyChanged += UpdateView;
         }
@@ -71,7 +71,7 @@ namespace CS3280_Assignment6.CustomControls
             }
 
             // Cast Datacontext to Seating Grid View Model
-            SeatingGridViewModel = (DataContext as Views.MainWindow).SeatingGridViewModel;
+            SeatingGridViewModel = (DataContext as MainWindowViewModel).SeatingGridViewModel;
 
             // Set Aircraft title
             AircraftTitle.Text = $"{SeatingGridViewModel.Aircraft.Flight_Number}, {SeatingGridViewModel.Aircraft.Aircraft_Type}";
@@ -85,9 +85,9 @@ namespace CS3280_Assignment6.CustomControls
             return operationResult;
         }
 
-        private void GenerateSeats(int cols, int aisles, List<Models.Seat> seats)
+        private void GenerateSeats(int cols, int aisles, IEnumerable<SeatViewModel> seats)
         {
-            int seatsInCol = (seats.Count / cols);
+            int seatsInCol = (seats.Count() / cols);
             int colsPerAisle = cols / (aisles + 1);
             int aisleOffset = 0;
 
@@ -100,11 +100,12 @@ namespace CS3280_Assignment6.CustomControls
                     aisleOffset++;
                 }
 
+                List<SeatViewModel> seatViewModels = seats.ToList();
                 for (int seat = column * seatsInCol; seat < (column + 1) * seatsInCol; seat++)
                 {
-                    SeatControl seatControl = new SeatControl();
-                    seatControl.Seat = seats[seat];
+                    SeatControl seatControl = new SeatControl(this, seatViewModels[seat]);
                     seatControl.Style = Resources["aircraft_seat_style"] as Style;
+                    seatControl.SeatSelected += OnSeatSelected;
 
                     stackPanel.Children.Add(seatControl);
                 }
@@ -139,6 +140,21 @@ namespace CS3280_Assignment6.CustomControls
             for (int pos = colsPerAisle; pos < cols; pos += colsPerAisle)
             {
                 SeatingLayoutGrid.ColumnDefinitions.Insert(2, colDef);
+            }
+        }
+
+        private void OnSeatSelected(int seatID)
+        {
+            SeatingGridViewModel.SelectedSeatID = seatID;
+
+            var query =
+                from seatViewModel in SeatingGridViewModel.Aircraft.Seats
+                where seatViewModel.SeatID != seatID
+                select seatViewModel;
+            
+            foreach (SeatViewModel svm in query)
+            {
+                svm.SeatSelected = false;
             }
         }
     }

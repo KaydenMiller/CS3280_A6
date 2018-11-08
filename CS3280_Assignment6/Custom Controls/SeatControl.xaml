@@ -16,23 +16,18 @@
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
 
-        <Style x:Key="Seat_Empty" TargetType="Grid">
-            <Setter Property="Background" Value="Blue"/>
-        </Style>
-
-        <Style x:Key="Seat_Taken" TargetType="Grid">
-            <Setter Property="Background" Value="Red"/>
-        </Style>
-
-        <Style x:Key="Seat_Selected" TargetType="Grid">
-            <Setter Property="Background" Value="Green"/>
+        <Style x:Key="Seat_Main" TargetType="Grid">
+            <Setter Property="Background" Value="{Binding SeatColor, FallbackValue=Blue}"/>
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Grid x:Name="InnerGrid" Style="{StaticResource Seat_Empty}">
-            <TextBlock x:Name="ID"
-                       Text="1" 
+        <Grid x:Name="InnerGrid" Style="{StaticResource Seat_Main}">
+            <Button x:Name="btnSeat" Background="Transparent"
+                    Click="btnSeat_Click">
+                <TextBlock x:Name="ID"
+                       Text="{Binding SeatID, FallbackValue=1}" 
                        Style="{StaticResource Seat_Base}" />
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

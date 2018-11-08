@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CS3280_Assignment6.Utilities;
+using CS3280_Assignment6.ViewModels;
 
 namespace CS3280_Assignment6.Models
 {
@@ -22,10 +23,12 @@ namespace CS3280_Assignment6.Models
         public int Columns { get; set; }
         public int Aisles { get; set; }
 
-        public List<Seat> Seats { get; private set; } = new List<Seat>();
+        public List<SeatViewModel> Seats { get; private set; } = new List<SeatViewModel>();
 
         public Aircraft(Flight flight, int seats, int cols, int aisles)
         {
+            Passengers = new List<Passenger>();
+
             _flightInfo = flight;
             Flight_ID = _flightInfo.Flight_ID;
             Flight_Number = _flightInfo.Flight_Number;
@@ -35,44 +38,26 @@ namespace CS3280_Assignment6.Models
             Columns = cols;
             Aisles = aisles;
 
-            CreateSeats(seats);
+            for (int seat = 0; seat < seats; seat++)
+            {
+                SeatViewModel viewModel = new SeatViewModel
+                {
+                    SeatID = seat,
+                    SeatStatus = SeatStatus.Empty
+                };
+
+                Seats.Add(viewModel);
+            }
+
+            foreach (Passenger pass in Controllers.FlightController.GetAllPassengers())
+            {
+                AddPassenger(pass);
+            }
         }
 
         public void AddPassenger(Passenger passenger)
         {
             Passengers.Add(passenger);
-        }
-        
-        private void CreateSeats(int seatsToCreate)
-        {
-            for (int seat = 0; seat < seatsToCreate; seat++)
-            {
-                Seats.Add(new Seat(seat, SeatStatus.Empty));
-            }
-        }
-        public OperationResult UpdateSeat(int id, SeatStatus status)
-        {
-            var query =
-                from seat in Seats
-                where seat.ID == id
-                select seat;
-
-            if (query != Enumerable.Empty<Seat>())
-            {
-                query.ToList()[0].Status = status;
-                return new OperationResult()
-                {
-                    Result = OperationResultValue.Success
-                };
-            }
-            else
-            {
-                OperationResult result = new OperationResult();
-                result.Result = OperationResultValue.Failure;
-                result.AddMessage($"The query for seat ID: {id} returned an empty Enumerable.");
-
-                return result;
-            }
         }
     }
 }

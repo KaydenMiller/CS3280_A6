@@ -9,7 +9,6 @@ namespace CS3280_Assignment6.Models
     public enum SeatStatus
     {
         Empty,
-        Selected,
         Taken
     }
 

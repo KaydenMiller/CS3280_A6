@@ -25,5 +25,18 @@ namespace CS3280_Assignment6.ViewModels
         {
             get => Aircraft.Flight_Number.ToString();
         }
+
+        private int _selectedSeatID;
+        public int SelectedSeatID
+        {
+            get
+            {
+                return _selectedSeatID;
+            }
+            set
+            {
+                SetProperty(ref _selectedSeatID, value);
+            }
+        }
     }
 }

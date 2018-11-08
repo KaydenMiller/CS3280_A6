@@ -5,13 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CS3280_Assignment6.Views"
         xmlns:air="clr-namespace:CS3280_Assignment6.CustomControls"
-        xmlns:data="clr-namespace:CS3280_Assignment6.ViewModels"
+        xmlns:viewModel="clr-namespace:CS3280_Assignment6.ViewModels"
+        xmlns:util="clr-namespace:CS3280_Assignment6.Utilities"
         mc:Ignorable="d"
         Title="MainWindow" Height="645" Width="956">
     <Window.Resources>
-        <data:MainWindowViewModel x:Key="MainWindowViewModel">
-            
-        </data:MainWindowViewModel>
+        <util:IndexToBoolConverter x:Key="IndexToBoolConverter"/>
         
         <Style x:Key="title_textblock_style" TargetType="{x:Type TextBlock}">
             <Setter Property="TextWrapping" Value="NoWrap"/>
@@ -27,6 +26,7 @@
             <Setter Property="Margin" Value="10"/>
         </Style>
     </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -51,31 +51,56 @@
                     <ComboBox x:Name="cbxFlight" Width="150" FontSize="20"
                               ItemsSource="{Binding Aircraft}"
                               SelectedItem="{Binding SelectedAircraft}">
-                        <ComboBox.DisplayMemberPath>
-                            <MultiBinding StringFormat="{}{0},{1}">
-                                <Binding Path="Flight_ID"/>
-                                <Binding Path="Flight_Number"/>
-                            </MultiBinding>
-                        </ComboBox.DisplayMemberPath>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Flight_ID}"/>
+                                    <TextBlock Text=", "/>
+                                    <TextBlock Text="{Binding Flight_Number}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
                     <Label Content="Choose Passenger:" FontSize="20"/>
-                    <ComboBox x:Name="cbxPassenger" Width="150" FontSize="20"/>
+                    <ComboBox x:Name="cbxPassenger" Width="150" FontSize="20"
+                              ItemsSource="{Binding Passengers}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding FirstName}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding LastName}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
                     <Label Content="Passenger's Seat:" FontSize="20"/>
                     <Border BorderThickness="1" BorderBrush="Black">
-                        <TextBlock x:Name="SeatNumber" Width="150" FontSize="20"/>
+                        <TextBox x:Name="SeatNumber" 
+                                 Width="150" FontSize="20" 
+                                 BorderThickness="0" 
+                                 AcceptsReturn="False" AcceptsTab="False"
+                                 IsEnabled="{Binding ElementName=cbxFlight, Path=SelectedIndex, Converter={StaticResource IndexToBoolConverter}}"
+                                 Text="{Binding SelectedSeatID, Mode=TwoWay}"/>
                     </Border>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <Button x:Name="AddPassenger" Content="Add Passenger" FontSize="15" Padding="5" Margin="5 0"/>
-                    <Button x:Name="ChangeSeat" Content="Change Seat" FontSize="15" Padding="5" Margin="5 0"/>
-                    <Button x:Name="DeletePassenger" Content="Delete Passenger" FontSize="15" Padding="5" Margin="5 0"/>
+                    <Button x:Name="AddPassenger" Content="Add Passenger" FontSize="15"
+                            IsEnabled="{Binding ElementName=cbxFlight, Path=SelectedIndex, Converter={StaticResource IndexToBoolConverter}}"
+                            Padding="5" Margin="5 0"/>
+                    <Button x:Name="ChangeSeat" Content="Change Seat" FontSize="15"
+                            IsEnabled="{Binding ElementName=cbxPassenger, Path=SelectedIndex, Converter={StaticResource IndexToBoolConverter}}"
+                            Padding="5" Margin="5 0"/>
+                    <Button x:Name="DeletePassenger" Content="Delete Passenger" 
+                            IsEnabled="{Binding ElementName=cbxPassenger, Path=SelectedIndex, Converter={StaticResource IndexToBoolConverter}}"
+                            FontSize="15" Padding="5" Margin="5 0"/>
                 </StackPanel>
             </StackPanel>
 

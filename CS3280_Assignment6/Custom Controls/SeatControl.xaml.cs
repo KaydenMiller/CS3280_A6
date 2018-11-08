@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CS3280_Assignment6.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,40 +21,28 @@ namespace CS3280_Assignment6.CustomControls
     /// </summary>
     public partial class SeatControl : UserControl
     {
-        private Models.Seat _seat { get; set; }
-        public Models.Seat Seat
-        {
-            get { return _seat; }
-            set
-            {
-                _seat = value;
-                ConfigureSeat();
-            }
-        }
+        private SeatingGrid SeatingGrid;
 
-        public SeatControl()
+        public event Action<int> SeatSelected; 
+
+        public SeatControl(SeatingGrid seatingGrid)
         {
+            SeatingGrid = seatingGrid;
             InitializeComponent();
+            DataContext = new SeatViewModel();
         }
 
-        private void ConfigureSeat()
+        public SeatControl(SeatingGrid seatingGrid, SeatViewModel viewModel)
         {
-            // Set the seat color resource
-            switch (_seat.Status)
-            {
-                case Models.SeatStatus.Empty:
-                    InnerGrid.Style = Resources["Seat_Empty"] as Style;
-                    break;
-                case Models.SeatStatus.Selected:
-                    InnerGrid.Style = Resources["Seat_Selected"] as Style;
-                    break;
-                case Models.SeatStatus.Taken:
-                    InnerGrid.Style = Resources["Seat_Taken"] as Style;
-                    break;
-            }
+            SeatingGrid = seatingGrid;
+            InitializeComponent();
+            DataContext = viewModel;
+        }
 
-            // Set the ID of the seat
-            ID.Text = (_seat.ID + 1).ToString();
+        private void btnSeat_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as SeatViewModel).SeatSelected = true;
+            SeatSelected?.Invoke((DataContext as SeatViewModel).SeatID);
         }
     }
 }
