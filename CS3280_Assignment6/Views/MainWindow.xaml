@@ -5,9 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CS3280_Assignment6.Views"
         xmlns:air="clr-namespace:CS3280_Assignment6.CustomControls"
+        xmlns:data="clr-namespace:CS3280_Assignment6.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="645" Width="956">
     <Window.Resources>
+        <data:MainWindowViewModel x:Key="MainWindowViewModel">
+            
+        </data:MainWindowViewModel>
+        
         <Style x:Key="title_textblock_style" TargetType="{x:Type TextBlock}">
             <Setter Property="TextWrapping" Value="NoWrap"/>
             <Setter Property="TextTrimming" Value="None"/>
@@ -45,8 +50,14 @@
                     <Label Content="Choose Flight:" FontSize="20"/>
                     <ComboBox x:Name="cbxFlight" Width="150" FontSize="20"
                               ItemsSource="{Binding Aircraft}"
-                              DisplayMemberPath="TaleNumber"
-                              SelectedItem="{Binding SelectedAircraft}"/>
+                              SelectedItem="{Binding SelectedAircraft}">
+                        <ComboBox.DisplayMemberPath>
+                            <MultiBinding StringFormat="{}{0},{1}">
+                                <Binding Path="Flight_ID"/>
+                                <Binding Path="Flight_Number"/>
+                            </MultiBinding>
+                        </ComboBox.DisplayMemberPath>
+                    </ComboBox>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">

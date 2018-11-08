@@ -18,12 +18,12 @@ namespace CS3280_Assignment6.ViewModels
 
         public string Aircraft_Flight_ID
         {
-            get => Aircraft.FlightInfo.Flight_ID.ToString();
+            get => Aircraft.Flight_ID.ToString();
         }
 
         public string Aircraft_Flight_Number
         {
-            get => Aircraft.FlightInfo.Flight_Number.ToString();
+            get => Aircraft.Flight_Number.ToString();
         }
     }
 }

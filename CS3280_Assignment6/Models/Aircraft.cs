@@ -11,7 +11,11 @@ namespace CS3280_Assignment6.Models
     {
         public int ID { get; set; }
 
-        public Flight FlightInfo { get; set; }
+        private Flight _flightInfo { get; set; }
+        public int Flight_ID { get; set; }
+        public int Flight_Number { get; set; }
+        public string Aircraft_Type { get; set; }
+
         public List<Passenger> Passengers { get; set; }
 
         public int TotalSeats { get; }
@@ -22,7 +26,11 @@ namespace CS3280_Assignment6.Models
 
         public Aircraft(Flight flight, int seats, int cols, int aisles)
         {
-            FlightInfo = flight;
+            _flightInfo = flight;
+            Flight_ID = _flightInfo.Flight_ID;
+            Flight_Number = _flightInfo.Flight_Number;
+            Aircraft_Type = _flightInfo.Aircraft_Type;
+
             TotalSeats = seats;
             Columns = cols;
             Aisles = aisles;

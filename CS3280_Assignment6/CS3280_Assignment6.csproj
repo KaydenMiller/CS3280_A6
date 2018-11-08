@@ -70,6 +70,7 @@
     <Compile Include="Repositories\FakePassengerRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Utilities\OperationResult.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SeatingGridViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\CreatePassengerWindow.xaml.cs">

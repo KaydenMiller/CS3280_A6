@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CS3280_Assignment6.Models;
+using CS3280_Assignment6.ViewModels;
 
 namespace CS3280_Assignment6.Views
 {
@@ -21,8 +22,10 @@ namespace CS3280_Assignment6.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<Aircraft> Aircraft { get; set; } = new List<Aircraft>();
-        public ViewModels.SeatingGridViewModel SeatingGridViewModel { get; set; } = new ViewModels.SeatingGridViewModel();
+        public MainWindowViewModel MainWindowViewModel { get; set; }
+
+        //public List<Aircraft> Aircraft { get; set; } = new List<Aircraft>();
+        //public ViewModels.SeatingGridViewModel SeatingGridViewModel { get; set; } = new ViewModels.SeatingGridViewModel();
 
         private Aircraft _selectedAircraft;
         public Aircraft SelectedAircraft
@@ -31,7 +34,7 @@ namespace CS3280_Assignment6.Views
             set
             {
                 _selectedAircraft = value;
-                SeatingGridViewModel.Aircraft = _selectedAircraft;
+                MainWindowViewModel.SeatingGridViewModel.Aircraft = _selectedAircraft;
             }
         }
 
@@ -44,7 +47,7 @@ namespace CS3280_Assignment6.Views
             foreach (Flight flight in Controllers.FlightController.GetAllFlights())
             {
                 Aircraft aircraft = new Aircraft(flight, 12, 4, 1);
-                Aircraft.Add(aircraft);
+                MainWindowViewModel.Aircraft.Add(aircraft);
             }
         }
     }
