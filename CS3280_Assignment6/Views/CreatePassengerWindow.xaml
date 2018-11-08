@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CS3280_Assignment6.Views"
         mc:Ignorable="d"
         Title="CreatePassengerWindow" 
-        Height="Auto" Width="Auto" d:DesignWidth="342" d:DesignHeight="243.4">
+        Height="250" Width="400" Loaded="Window_Loaded">
     <Grid Height="Auto" Width="Auto">
         <Grid HorizontalAlignment="Center"
               VerticalAlignment="Center">
@@ -34,7 +34,8 @@
                     <Button x:Name="Cancel" Content="CANCEL"
                             FontSize="12" FontWeight="Bold"
                             Padding="5"
-                            Grid.Column="2"/>
+                            Grid.Column="2"
+                            Click="Cancel_Click"/>
                 </Grid>
             </StackPanel>
         </Grid>

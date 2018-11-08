@@ -23,5 +23,15 @@ namespace CS3280_Assignment6.Views
         {
             InitializeComponent();
         }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            FirstName.Focus();
+        }
     }
 }

@@ -94,7 +94,8 @@
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Button x:Name="AddPassenger" Content="Add Passenger" FontSize="15"
                             IsEnabled="{Binding ElementName=cbxFlight, Path=SelectedIndex, Converter={StaticResource IndexToBoolConverter}}"
-                            Padding="5" Margin="5 0"/>
+                            Padding="5" Margin="5 0"
+                            Click="AddPassenger_Click"/>
                     <Button x:Name="ChangeSeat" Content="Change Seat" FontSize="15"
                             IsEnabled="{Binding ElementName=cbxPassenger, Path=SelectedIndex, Converter={StaticResource IndexToBoolConverter}}"
                             Padding="5" Margin="5 0"/>

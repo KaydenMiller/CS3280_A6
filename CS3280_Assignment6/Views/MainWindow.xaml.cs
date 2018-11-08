@@ -27,5 +27,11 @@ namespace CS3280_Assignment6.Views
             InitializeComponent();
             DataContext = new MainWindowViewModel();
         }
+
+        private void AddPassenger_Click(object sender, RoutedEventArgs e)
+        {
+            CreatePassengerWindow createPassengerWindow = new CreatePassengerWindow();
+            createPassengerWindow.Show();
+        }
     }
 }
