@@ -62,14 +62,22 @@
     <Compile Include="Data Access\DataAccess.cs" />
     <Compile Include="Models\Aircraft.cs" />
     <Compile Include="Models\Flight.cs" />
+    <Compile Include="Models\FlightPassengerLink.cs" />
     <Compile Include="Models\Passenger.cs" />
     <Compile Include="Custom Controls\SeatControl.xaml.cs">
       <DependentUpon>SeatControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Seat.cs" />
+    <Compile Include="Repositories\AdoNetContext.cs" />
+    <Compile Include="Repositories\AdoNetUnitOfWork.cs" />
     <Compile Include="Repositories\FakeFlightRepository.cs" />
     <Compile Include="Repositories\FakePassengerRepository.cs" />
+    <Compile Include="Repositories\FlightPassengerLinkRepository.cs" />
+    <Compile Include="Repositories\FlightRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\IUnitOfWork.cs" />
+    <Compile Include="Repositories\PassengerRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Utilities\IndexToBoolConverter.cs" />
     <Compile Include="Utilities\OperationResult.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

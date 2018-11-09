@@ -7,13 +7,22 @@ using System.Threading.Tasks;
 
 namespace CS3280_Assignment6.Repositories
 {
-    interface IRepository<T>
+    public interface IRepository<TEntity> where TEntity : class
     {
-        void Add(T item);
-        void Remove(T item);
-        void Update(T item);
-        T FindByID(int id);
-        IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
-        IEnumerable<T> FindAll();
+        //TEntity Get(int id);
+        //IEnumerable<TEntity> GetAll();
+        //IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+
+        //void Add(TEntity item);
+        //void AddRange(IEnumerable<TEntity> items);
+
+        //void Remove(TEntity item);
+        //void RemoveRange(IEnumerable<TEntity> items);
+
+        void Add(TEntity item);
+        void Remove(TEntity item);
+        TEntity FindByID(int id);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> FindAll();
     }
 }

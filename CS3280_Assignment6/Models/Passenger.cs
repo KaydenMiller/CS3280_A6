@@ -12,6 +12,11 @@ namespace CS3280_Assignment6.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public Passenger()
+        {
+
+        }
+
         public Passenger(int id, string firstName, string lastName)
         {
             ID = id;

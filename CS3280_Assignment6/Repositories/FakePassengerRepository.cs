@@ -60,17 +60,5 @@ namespace CS3280_Assignment6.Repositories
                 _passengers.Remove(item);
             }
         }
-
-        public void Update(Passenger item)
-        {
-            foreach (Passenger passenger in _passengers)
-            {
-                if (passenger.ID == item.ID)
-                {
-                    passenger.FirstName = item.FirstName;
-                    passenger.LastName = item.LastName;
-                }
-            }
-        }
     }
 }

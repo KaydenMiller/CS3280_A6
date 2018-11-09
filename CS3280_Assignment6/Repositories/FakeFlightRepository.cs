@@ -14,10 +14,10 @@ namespace CS3280_Assignment6.Repositories
 
         public FakeFlightRepository()
         {
-            Add(new Flight(0, 121, "Boeing 747"));
-            Add(new Flight(1, 122, "Commerical Jet"));
-            Add(new Flight(2, 453, "Not good at names"));
-            Add(new Flight(3, 422, "Special Jet 42"));
+            Add(new Flight(0, "121", "Boeing 747"));
+            Add(new Flight(1, "122", "Commerical Jet"));
+            Add(new Flight(2, "453", "Not good at names"));
+            Add(new Flight(3, "422", "Special Jet 42"));
         }
 
         public void Add(Flight item)
@@ -58,18 +58,6 @@ namespace CS3280_Assignment6.Repositories
             if (_flights.Contains(item))
             {
                 _flights.Remove(item);
-            }
-        }
-
-        public void Update(Flight item)
-        {
-            foreach (Flight flight in _flights)
-            {
-                if (item.Flight_ID == flight.Flight_ID)
-                {
-                    flight.Aircraft_Type = item.Aircraft_Type;
-                    flight.Flight_Number = item.Flight_Number;
-                }
             }
         }
     }
