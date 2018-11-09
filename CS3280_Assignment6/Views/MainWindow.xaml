@@ -33,7 +33,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <air:SeatingGrid x:Name="SeatingGrid"/> 
+        <air:SeatingGrid x:Name="SeatingGrid" SeatSelected="SeatingGrid_SeatSelected"/> 
 
         <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>

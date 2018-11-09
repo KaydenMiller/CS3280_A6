@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CS3280_Assignment6.CustomControls;
 using CS3280_Assignment6.Models;
 using CS3280_Assignment6.ViewModels;
 
@@ -32,6 +33,11 @@ namespace CS3280_Assignment6.Views
         {
             CreatePassengerWindow createPassengerWindow = new CreatePassengerWindow();
             createPassengerWindow.Show();
+        }
+
+        public void SeatingGrid_SeatSelected(object sender, SeatSelectedEventArgs e)
+        {
+
         }
     }
 }

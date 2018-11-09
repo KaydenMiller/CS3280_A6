@@ -143,6 +143,17 @@ namespace CS3280_Assignment6.CustomControls
             }
         }
 
+        
+        public static readonly RoutedEvent SeatClicked = EventManager.RegisterRoutedEvent(
+            "SeatSelected", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SeatingGrid));
+        public event RoutedEventHandler RoutedEventHandler
+        {
+            add { AddHandler(SeatClicked, value); }
+            remove { RemoveHandler(SeatClicked, value); }
+        }
+
+        public delegate void SeatSelectedHandler(object sender, SeatSelectedEventArgs e);
+        public event SeatSelectedHandler SeatSelected;
         private void OnSeatSelected(int seatID)
         {
             SeatingGridViewModel.SelectedSeatID = seatID;
@@ -156,6 +167,21 @@ namespace CS3280_Assignment6.CustomControls
             {
                 svm.SeatSelected = false;
             }
+
+            SeatSelected?.Invoke(this, new SeatSelectedEventArgs(seatID));
         }
     }
+
+    public class SeatSelectedEventArgs
+    {
+        public int SeatID { get; set; }
+
+        public SeatSelectedEventArgs() { }
+
+        public SeatSelectedEventArgs(int seatID)
+        {
+            SeatID = seatID;
+        }
+    }
+
 }
