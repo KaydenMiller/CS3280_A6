@@ -14,7 +14,7 @@ namespace CS3280_Assignment6.Models
 
         public FlightPassengerLink()
         {
-
+            
         }
 
         public FlightPassengerLink(int flightID, int passengerID, int seatNumber)
