@@ -12,6 +12,33 @@ namespace CS3280_Assignment6.ViewModels
         public List<Aircraft> Aircraft { get; set; } 
         public SeatingGridViewModel SeatingGridViewModel { get; set; }
 
+        private string _selectedPassengerSeatID = "";
+        public string SelectedPassengerSeatID
+        {
+            get
+            {
+                return _selectedPassengerSeatID;  
+            }
+            set
+            {
+                SetProperty(ref _selectedPassengerSeatID, value);
+            }
+        }
+
+        private Passenger _selectedPassenger;
+        public Passenger SelectedPassenger
+        {
+            get
+            {
+                return _selectedPassenger;
+            }
+            set
+            {
+                SetProperty(ref _selectedPassenger, value);
+                SelectedPassengerSeatID = SelectedAircraft.GetPassengerSeatID(SelectedPassenger);
+            }
+        }
+
         private int _selectedSeatID;
         public int SelectedSeatID
         {

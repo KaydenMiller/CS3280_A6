@@ -78,6 +78,7 @@
     <Compile Include="Repositories\IUnitOfWork.cs" />
     <Compile Include="Repositories\PassengerRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Utilities\Extensions\ExceptionExtensions.cs" />
     <Compile Include="Utilities\IndexToBoolConverter.cs" />
     <Compile Include="Utilities\OperationResult.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

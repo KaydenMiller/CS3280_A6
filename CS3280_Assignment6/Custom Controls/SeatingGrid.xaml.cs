@@ -143,17 +143,15 @@ namespace CS3280_Assignment6.CustomControls
             }
         }
 
-        
-        public static readonly RoutedEvent SeatClicked = EventManager.RegisterRoutedEvent(
-            "SeatSelected", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SeatingGrid));
-        public event RoutedEventHandler RoutedEventHandler
+        public delegate void SeatSelectedEventHandler(object sender, SeatSelectedEventArgs e);
+        public event SeatSelectedEventHandler SeatSelected
         {
-            add { AddHandler(SeatClicked, value); }
-            remove { RemoveHandler(SeatClicked, value); }
+            add { AddHandler(SeatSelectedEvent, value); }
+            remove { RemoveHandler(SeatSelectedEvent, value); }
         }
+        public static readonly RoutedEvent SeatSelectedEvent = EventManager.RegisterRoutedEvent(
+            "SeatSelected", RoutingStrategy.Bubble, typeof(SeatSelectedEventHandler), typeof(SeatingGrid));
 
-        public delegate void SeatSelectedHandler(object sender, SeatSelectedEventArgs e);
-        public event SeatSelectedHandler SeatSelected;
         private void OnSeatSelected(int seatID)
         {
             SeatingGridViewModel.SelectedSeatID = seatID;
@@ -162,23 +160,21 @@ namespace CS3280_Assignment6.CustomControls
                 from seatViewModel in SeatingGridViewModel.Aircraft.Seats
                 where seatViewModel.SeatID != seatID
                 select seatViewModel;
-            
+
             foreach (SeatViewModel svm in query)
             {
                 svm.SeatSelected = false;
             }
 
-            SeatSelected?.Invoke(this, new SeatSelectedEventArgs(seatID));
+            RaiseEvent(new SeatSelectedEventArgs(seatID, SeatSelectedEvent));
         }
     }
 
-    public class SeatSelectedEventArgs
+    public class SeatSelectedEventArgs : RoutedEventArgs
     {
         public int SeatID { get; set; }
 
-        public SeatSelectedEventArgs() { }
-
-        public SeatSelectedEventArgs(int seatID)
+        public SeatSelectedEventArgs(int seatID, RoutedEvent routedEvent) : base (routedEvent)
         {
             SeatID = seatID;
         }

@@ -37,7 +37,7 @@ namespace CS3280_Assignment6.Views
 
         public void SeatingGrid_SeatSelected(object sender, SeatSelectedEventArgs e)
         {
-
+            (DataContext as MainWindowViewModel).SelectedSeatID = e.SeatID;
         }
     }
 }
