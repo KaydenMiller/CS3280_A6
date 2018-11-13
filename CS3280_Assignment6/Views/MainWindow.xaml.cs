@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using CS3280_Assignment6.CustomControls;
 using CS3280_Assignment6.Models;
 using CS3280_Assignment6.ViewModels;
+using CS3280_Assignment6.Utilities.Extensions;
 
 namespace CS3280_Assignment6.Views
 {
@@ -39,8 +40,15 @@ namespace CS3280_Assignment6.Views
         /// <param name="e"></param>
         private void AddPassenger_Click(object sender, RoutedEventArgs e)
         {
-            CreatePassengerWindow createPassengerWindow = new CreatePassengerWindow();
-            createPassengerWindow.Show();
+            try
+            {
+                CreatePassengerWindow createPassengerWindow = new CreatePassengerWindow();
+                createPassengerWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
         }
 
         /// <summary>
@@ -50,7 +58,14 @@ namespace CS3280_Assignment6.Views
         /// <param name="e"></param>
         public void SeatingGrid_SeatSelected(object sender, SeatSelectedEventArgs e)
         {
-            (DataContext as MainWindowViewModel).SelectedSeatID = e.SeatID;
+            try
+            {
+                (DataContext as MainWindowViewModel).SelectedSeatID = e.SeatID;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
         }
     }
 }

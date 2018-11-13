@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CS3280_Assignment6.Utilities.Extensions;
 
 namespace CS3280_Assignment6.CustomControls
 {
@@ -37,9 +38,16 @@ namespace CS3280_Assignment6.CustomControls
         /// <param name="seatingGrid"></param>
         public SeatControl(SeatingGrid seatingGrid)
         {
-            SeatingGrid = seatingGrid;
-            InitializeComponent();
-            DataContext = new SeatViewModel();
+            try
+            {
+                SeatingGrid = seatingGrid;
+                InitializeComponent();
+                DataContext = new SeatViewModel();
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
         }
 
         /// <summary>
@@ -49,9 +57,16 @@ namespace CS3280_Assignment6.CustomControls
         /// <param name="viewModel"></param>
         public SeatControl(SeatingGrid seatingGrid, SeatViewModel viewModel)
         {
-            SeatingGrid = seatingGrid;
-            InitializeComponent();
-            DataContext = viewModel;
+            try
+            {
+                SeatingGrid = seatingGrid;
+                InitializeComponent();
+                DataContext = viewModel;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
         }
 
         /// <summary>
@@ -61,8 +76,15 @@ namespace CS3280_Assignment6.CustomControls
         /// <param name="e"></param>
         private void btnSeat_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as SeatViewModel).SeatSelected = true;
-            SeatSelected?.Invoke((DataContext as SeatViewModel).SeatID);
+            try
+            {
+                (DataContext as SeatViewModel).SeatSelected = true;
+                SeatSelected?.Invoke((DataContext as SeatViewModel).SeatID);
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
         }
     }
 }

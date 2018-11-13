@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using CS3280_Assignment6.Utilities.Extensions;
 using System.Windows.Shapes;
 
 namespace CS3280_Assignment6.CustomControls
@@ -33,9 +34,16 @@ namespace CS3280_Assignment6.CustomControls
         /// </summary>
         public SeatingGrid()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            DataContextChanged += OnDataContextChanged;
+                DataContextChanged += OnDataContextChanged;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
         }
 
         /// <summary>
@@ -46,10 +54,17 @@ namespace CS3280_Assignment6.CustomControls
         /// <param name="e"></param>
         public void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            // Cast Datacontext to Seating Grid View Model
-            SeatingGridViewModel = (DataContext as MainWindowViewModel).SeatingGridViewModel;
+            try
+            {
+                // Cast Datacontext to Seating Grid View Model
+                SeatingGridViewModel = (DataContext as MainWindowViewModel).SeatingGridViewModel;
 
-            SeatingGridViewModel.PropertyChanged += UpdateView;
+                SeatingGridViewModel.PropertyChanged += UpdateView;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
         }
 
         /// <summary>
@@ -59,14 +74,21 @@ namespace CS3280_Assignment6.CustomControls
         /// <param name="e"></param>
         public void UpdateView(object sender, PropertyChangedEventArgs e)
         {
-            ClearData();
-            var result = GenerateView();
-            if (result.Result == OperationResultValue.Failure)
+            try
             {
-                string message = "";
-                foreach (string msg in result.Messages)
-                    message += $" {msg}";
-                throw new Exception(message);
+                ClearData();
+                var result = GenerateView();
+                if (result.Result == OperationResultValue.Failure)
+                {
+                    string message = "";
+                    foreach (string msg in result.Messages)
+                        message += $" {msg}";
+                    throw new Exception(message);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
             }
         }
 
@@ -75,8 +97,15 @@ namespace CS3280_Assignment6.CustomControls
         /// </summary>
         private void ClearData()
         {
-            SeatingLayoutGrid.ColumnDefinitions.Clear();
-            SeatingLayoutGrid.Children.Clear();
+            try
+            {
+                SeatingLayoutGrid.ColumnDefinitions.Clear();
+                SeatingLayoutGrid.Children.Clear();
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
         }
 
         // The following section of code is used for generation of the Control UI as different aircraft have 
@@ -91,25 +120,33 @@ namespace CS3280_Assignment6.CustomControls
         {
             OperationResult operationResult = new OperationResult();
 
-            if (DataContext == null)
+            try
             {
-                operationResult.Result = OperationResultValue.Failure;
-                operationResult.Messages.Add("Empty Seating Grid View Model.");
-                return operationResult;
+                if (DataContext == null)
+                {
+                    operationResult.Result = OperationResultValue.Failure;
+                    operationResult.Messages.Add("Empty Seating Grid View Model.");
+                    return operationResult;
+                }
+
+                // Cast Datacontext to Seating Grid View Model
+                SeatingGridViewModel = (DataContext as MainWindowViewModel).SeatingGridViewModel;
+
+                // Set Aircraft title
+                AircraftTitle.Text = $"{SeatingGridViewModel.Aircraft.Flight_Number}, {SeatingGridViewModel.Aircraft.Aircraft_Type}";
+
+                // Generate Seating Grid
+                GenerateColumns(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles);
+                GenerateAisles(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles);
+                GenerateSeats(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles, SeatingGridViewModel.Aircraft.Seats);
+
+                operationResult.Result = OperationResultValue.Success;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
             }
 
-            // Cast Datacontext to Seating Grid View Model
-            SeatingGridViewModel = (DataContext as MainWindowViewModel).SeatingGridViewModel;
-
-            // Set Aircraft title
-            AircraftTitle.Text = $"{SeatingGridViewModel.Aircraft.Flight_Number}, {SeatingGridViewModel.Aircraft.Aircraft_Type}";
-
-            // Generate Seating Grid
-            GenerateColumns(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles);
-            GenerateAisles(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles);
-            GenerateSeats(SeatingGridViewModel.Aircraft.Columns, SeatingGridViewModel.Aircraft.Aisles, SeatingGridViewModel.Aircraft.Seats);
-
-            operationResult.Result = OperationResultValue.Success;
             return operationResult;
         }
 
@@ -121,32 +158,39 @@ namespace CS3280_Assignment6.CustomControls
         /// <param name="seats"></param>
         private void GenerateSeats(int cols, int aisles, IEnumerable<SeatViewModel> seats)
         {
-            int seatsInCol = (seats.Count() / cols);
-            int colsPerAisle = cols / (aisles + 1);
-            int aisleOffset = 0;
-
-            for (int column = 0; column < cols; column++)
+            try
             {
-                StackPanel stackPanel = new StackPanel();
+                int seatsInCol = (seats.Count() / cols);
+                int colsPerAisle = cols / (aisles + 1);
+                int aisleOffset = 0;
 
-                if (column % colsPerAisle == 0 && column != 0)
+                for (int column = 0; column < cols; column++)
                 {
-                    aisleOffset++;
+                    StackPanel stackPanel = new StackPanel();
+
+                    if (column % colsPerAisle == 0 && column != 0)
+                    {
+                        aisleOffset++;
+                    }
+
+                    List<SeatViewModel> seatViewModels = seats.ToList();
+                    for (int seat = column * seatsInCol; seat < (column + 1) * seatsInCol; seat++)
+                    {
+                        SeatControl seatControl = new SeatControl(this, seatViewModels[seat]);
+                        seatControl.Style = Resources["aircraft_seat_style"] as Style;
+                        seatControl.SeatSelected += OnSeatSelected;
+
+                        stackPanel.Children.Add(seatControl);
+                    }
+
+                    // Column becomes wrong after cols / aisles
+                    Grid.SetColumn(stackPanel, column + aisleOffset);
+                    SeatingLayoutGrid.Children.Add(stackPanel);
                 }
-
-                List<SeatViewModel> seatViewModels = seats.ToList();
-                for (int seat = column * seatsInCol; seat < (column + 1) * seatsInCol; seat++)
-                {
-                    SeatControl seatControl = new SeatControl(this, seatViewModels[seat]);
-                    seatControl.Style = Resources["aircraft_seat_style"] as Style;
-                    seatControl.SeatSelected += OnSeatSelected;
-
-                    stackPanel.Children.Add(seatControl);
-                }
-
-                // Column becomes wrong after cols / aisles
-                Grid.SetColumn(stackPanel, column + aisleOffset);
-                SeatingLayoutGrid.Children.Add(stackPanel);
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
             }
         }
 
@@ -157,13 +201,21 @@ namespace CS3280_Assignment6.CustomControls
         /// <param name="aisles"></param>
         private void GenerateColumns(int cols, int aisles)
         {
-            for (int column = 0; column < cols; column++)
+            try
             {
-                ColumnDefinition colDef = new ColumnDefinition();
-                GridLength gridLength = new GridLength(1, GridUnitType.Auto);
 
-                colDef.Width = gridLength;
-                SeatingLayoutGrid.ColumnDefinitions.Add(colDef);
+                for (int column = 0; column < cols; column++)
+                {
+                    ColumnDefinition colDef = new ColumnDefinition();
+                    GridLength gridLength = new GridLength(1, GridUnitType.Auto);
+
+                    colDef.Width = gridLength;
+                    SeatingLayoutGrid.ColumnDefinitions.Add(colDef);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
             }
         }
 
@@ -174,16 +226,23 @@ namespace CS3280_Assignment6.CustomControls
         /// <param name="aisles"></param>
         private void GenerateAisles(int cols, int aisles)
         {
-            ColumnDefinition colDef = new ColumnDefinition();
-            GridLength gridLength = new GridLength(1, GridUnitType.Star);
-            colDef.Width = gridLength;
-
-            int colsPerAisle = cols / (aisles + 1);
-
-
-            for (int pos = colsPerAisle; pos < cols; pos += colsPerAisle)
+            try
             {
-                SeatingLayoutGrid.ColumnDefinitions.Insert(2, colDef);
+                ColumnDefinition colDef = new ColumnDefinition();
+                GridLength gridLength = new GridLength(1, GridUnitType.Star);
+                colDef.Width = gridLength;
+
+                int colsPerAisle = cols / (aisles + 1);
+
+
+                for (int pos = colsPerAisle; pos < cols; pos += colsPerAisle)
+                {
+                    SeatingLayoutGrid.ColumnDefinitions.Insert(2, colDef);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
             }
         }
 
@@ -206,19 +265,26 @@ namespace CS3280_Assignment6.CustomControls
         /// <param name="seatID"></param>
         private void OnSeatSelected(int seatID)
         {
-            SeatingGridViewModel.SelectedSeatID = seatID;
-
-            var query =
-                from seatViewModel in SeatingGridViewModel.Aircraft.Seats
-                where seatViewModel.SeatID != seatID
-                select seatViewModel;
-
-            foreach (SeatViewModel svm in query)
+            try
             {
-                svm.SeatSelected = false;
-            }
+                SeatingGridViewModel.SelectedSeatID = seatID;
 
-            RaiseEvent(new SeatSelectedEventArgs(seatID, SeatSelectedEvent));
+                var query =
+                    from seatViewModel in SeatingGridViewModel.Aircraft.Seats
+                    where seatViewModel.SeatID != seatID
+                    select seatViewModel;
+
+                foreach (SeatViewModel svm in query)
+                {
+                    svm.SeatSelected = false;
+                }
+
+                RaiseEvent(new SeatSelectedEventArgs(seatID, SeatSelectedEvent));
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
         }
     }
 
