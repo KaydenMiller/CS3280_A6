@@ -21,10 +21,20 @@ namespace CS3280_Assignment6.CustomControls
     /// </summary>
     public partial class SeatControl : UserControl
     {
+        /// <summary>
+        /// The seating grid that this control is assigned to
+        /// </summary>
         private SeatingGrid SeatingGrid;
 
+        /// <summary>
+        /// Event to notify when this seat is selected
+        /// </summary>
         public event Action<int> SeatSelected; 
 
+        /// <summary>
+        /// Plain Contructor
+        /// </summary>
+        /// <param name="seatingGrid"></param>
         public SeatControl(SeatingGrid seatingGrid)
         {
             SeatingGrid = seatingGrid;
@@ -32,6 +42,11 @@ namespace CS3280_Assignment6.CustomControls
             DataContext = new SeatViewModel();
         }
 
+        /// <summary>
+        /// Constructor with ViewModel
+        /// </summary>
+        /// <param name="seatingGrid"></param>
+        /// <param name="viewModel"></param>
         public SeatControl(SeatingGrid seatingGrid, SeatViewModel viewModel)
         {
             SeatingGrid = seatingGrid;
@@ -39,6 +54,11 @@ namespace CS3280_Assignment6.CustomControls
             DataContext = viewModel;
         }
 
+        /// <summary>
+        /// Click event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSeat_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as SeatViewModel).SeatSelected = true;

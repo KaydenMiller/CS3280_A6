@@ -23,18 +23,31 @@ namespace CS3280_Assignment6.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Main window constructor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
         }
 
+        /// <summary>
+        /// Add passenger event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddPassenger_Click(object sender, RoutedEventArgs e)
         {
             CreatePassengerWindow createPassengerWindow = new CreatePassengerWindow();
             createPassengerWindow.Show();
         }
 
+        /// <summary>
+        /// On seat selected event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void SeatingGrid_SeatSelected(object sender, SeatSelectedEventArgs e)
         {
             (DataContext as MainWindowViewModel).SelectedSeatID = e.SeatID;

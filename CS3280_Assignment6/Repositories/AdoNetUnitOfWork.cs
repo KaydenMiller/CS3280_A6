@@ -9,12 +9,28 @@ namespace CS3280_Assignment6.Repositories
 {
     public class AdoNetUnitOfWork : IUnitOfWork
     {
-        private OleDbTransaction _transaction;
+        
+        /// <summary>
+        /// Action for rolling back
+        /// </summary>
         private readonly Action<AdoNetUnitOfWork> _rolledBack;
+        /// <summary>
+        /// Action for commiting data and finishing the unit of work
+        /// </summary>
         private readonly Action<AdoNetUnitOfWork> _commited;
 
+        private OleDbTransaction _transaction;
+        /// <summary>
+        /// A transaction with ADO.NET
+        /// </summary>
         public OleDbTransaction Transaction { get; private set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <param name="rolledBack"></param>
+        /// <param name="commited"></param>
         public AdoNetUnitOfWork(OleDbTransaction transaction, Action<AdoNetUnitOfWork> rolledBack, Action<AdoNetUnitOfWork> commited)
         {
             Transaction = transaction;
@@ -23,6 +39,9 @@ namespace CS3280_Assignment6.Repositories
             _commited = commited;
         }
 
+        /// <summary>
+        /// Will attempt to complete the unit of work
+        /// </summary>
         public void Complete()
         {
             if (_transaction == null)
@@ -35,6 +54,10 @@ namespace CS3280_Assignment6.Repositories
             _transaction = null;
         }
 
+        /// <summary>
+        /// Will close the transaction and finish any parts of the Unit of work 
+        /// Used with IDisposable interface for using blocks
+        /// </summary>
         public void Dispose()
         {
             if (_transaction == null)

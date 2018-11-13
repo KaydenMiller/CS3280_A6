@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace CS3280_Assignment6.ViewModels
 {
+    /// <summary>
+    /// Base viewmodel class 
+    /// handles property changed event invokation
+    /// </summary>
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

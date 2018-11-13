@@ -9,13 +9,24 @@ using System.Threading.Tasks;
 
 namespace CS3280_Assignment6.Repositories
 {
+    /// <summary>
+    /// Flight repository
+    /// </summary>
     public class FlightRepository : Repository<Flight>
     {
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="context"></param>
         public FlightRepository(AdoNetContext context) : base (context)
         {
 
         }
 
+        /// <summary>
+        /// Adds a flight
+        /// </summary>
+        /// <param name="flight"></param>
         public void Add(Flight flight)
         {
             using (var command = Context.CreateCommand())
@@ -31,6 +42,10 @@ namespace CS3280_Assignment6.Repositories
             }
         }
 
+        /// <summary>
+        /// removes a flight by id
+        /// </summary>
+        /// <param name="id"></param>
         public void Remove(int id)
         {
             using (var command = Context.CreateCommand())
@@ -41,6 +56,11 @@ namespace CS3280_Assignment6.Repositories
             }
         }
 
+        /// <summary>
+        /// Gets a flight by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IEnumerable<Flight> Get(int id)
         {
             using (var command = Context.CreateCommand())
@@ -52,6 +72,10 @@ namespace CS3280_Assignment6.Repositories
             }
         }
 
+        /// <summary>
+        /// Gets all flights from database
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Flight> GetAll()
         {
             using (var command = Context.CreateCommand())
@@ -62,6 +86,11 @@ namespace CS3280_Assignment6.Repositories
             }
         }
 
+        /// <summary>
+        /// Maps the data from a record to an entitiy for use within the application
+        /// </summary>
+        /// <param name="record"></param>
+        /// <param name="entity"></param>
         protected override void Map(IDataRecord record, Flight entity)
         {
             entity.Flight_ID = (int)record["Flight_ID"];

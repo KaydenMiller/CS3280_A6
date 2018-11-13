@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace CS3280_Assignment6.Repositories
 {
+
+    /// <summary>
+    /// Interface for Repositories still WIP
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public interface IRepository<TEntity> where TEntity : class
     {
         //TEntity Get(int id);

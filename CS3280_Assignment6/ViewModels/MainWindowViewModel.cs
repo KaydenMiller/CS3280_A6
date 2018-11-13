@@ -7,12 +7,24 @@ using System.Threading.Tasks;
 
 namespace CS3280_Assignment6.ViewModels
 {
+    /// <summary>
+    /// View model for the MainWindow
+    /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
+        /// <summary>
+        /// List of aircraft
+        /// </summary>
         public List<Aircraft> Aircraft { get; set; } 
+        /// <summary>
+        /// The view model for the seating grid (i wonder if there is a better way to do that)
+        /// </summary>
         public SeatingGridViewModel SeatingGridViewModel { get; set; }
 
         private string _selectedPassengerSeatID = "";
+        /// <summary>
+        /// The SeatID for the Selected Passenger
+        /// </summary>
         public string SelectedPassengerSeatID
         {
             get
@@ -26,6 +38,9 @@ namespace CS3280_Assignment6.ViewModels
         }
 
         private Passenger _selectedPassenger;
+        /// <summary>
+        /// The currently selected Passenger
+        /// </summary>
         public Passenger SelectedPassenger
         {
             get
@@ -40,6 +55,9 @@ namespace CS3280_Assignment6.ViewModels
         }
 
         private int _selectedSeatID;
+        /// <summary>
+        /// The currently selected seat
+        /// </summary>
         public int SelectedSeatID
         {
             get
@@ -53,6 +71,9 @@ namespace CS3280_Assignment6.ViewModels
         }
 
         private Aircraft _selectedAircraft;
+        /// <summary>
+        /// The currently selected Aircraft
+        /// </summary>
         public Aircraft SelectedAircraft
         {
             get => _selectedAircraft;
@@ -67,6 +88,9 @@ namespace CS3280_Assignment6.ViewModels
         }
 
         private IEnumerable<Passenger> _passengers;
+        /// <summary>
+        /// All of the passengers on to be displayed
+        /// </summary>
         public IEnumerable<Passenger> Passengers
         {
             get
@@ -81,6 +105,9 @@ namespace CS3280_Assignment6.ViewModels
             }
         }
 
+        /// <summary>
+        /// View Model empty constructor
+        /// </summary>
         public MainWindowViewModel()
         {
             Aircraft = new List<Aircraft>();
@@ -89,11 +116,22 @@ namespace CS3280_Assignment6.ViewModels
             LoadFlights();
         }
 
+        /// <summary>
+        /// Function to load flights sence the total seats on a flight are undefined this will assign them to an arbtrary random value
+        /// </summary>
         public void LoadFlights()
         {
+            Random rand = new Random();
+        
             foreach (Flight flight in Controllers.FlightController.GetAllFlights())
             {
-                Aircraft aircraft = new Aircraft(flight, 12, 4, 1);
+                int seats = 1;
+                do
+                {
+                    seats = rand.Next(12, 25);
+                } while (seats % 4 != 0);
+                
+                Aircraft aircraft = new Aircraft(flight, seats, 4, 1);
                 Aircraft.Add(aircraft);
             }
         }

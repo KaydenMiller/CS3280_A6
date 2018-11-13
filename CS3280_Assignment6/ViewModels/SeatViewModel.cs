@@ -12,6 +12,9 @@ namespace CS3280_Assignment6.ViewModels
     public class SeatViewModel : ViewModelBase
     {
         private int _seatID;
+        /// <summary>
+        /// SeatID
+        /// </summary>
         public int SeatID
         {
             get => _seatID;
@@ -22,6 +25,9 @@ namespace CS3280_Assignment6.ViewModels
         }
 
         private bool _seatSelected;
+        /// <summary>
+        /// Currently selected seat
+        /// </summary>
         public bool SeatSelected
         {
             get => _seatSelected;
@@ -33,6 +39,9 @@ namespace CS3280_Assignment6.ViewModels
         }
 
         private SeatStatus _seatStatus;
+        /// <summary>
+        /// The seat status
+        /// </summary>
         public SeatStatus SeatStatus
         {
             get => _seatStatus;
@@ -44,6 +53,9 @@ namespace CS3280_Assignment6.ViewModels
         }
 
         private Brush _seatColor;
+        /// <summary>
+        /// Color of seat
+        /// </summary>
         public Brush SeatColor
         {
             get => _seatColor;
@@ -53,6 +65,10 @@ namespace CS3280_Assignment6.ViewModels
             }
         }
 
+        /// <summary>
+        /// Function to determine seat color
+        /// </summary>
+        /// <returns></returns>
         private Brush DetermineSeatColor()
         {
             Color color = Colors.Black;

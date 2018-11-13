@@ -16,11 +16,27 @@ namespace CS3280_Assignment6.Repositories
     /// </summary>
     public class AdoNetContext : IDisposable
     {
+        /// <summary>
+        /// The database connection interface
+        /// </summary>
         private readonly IDbConnection _connection;
+        /// <summary>
+        /// Connection string
+        /// </summary>
         private readonly string _connectionString;
+        /// <summary>
+        /// Read Write Lock for use with threading
+        /// </summary>
         private readonly ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();
+        /// <summary>
+        /// The units of work that are currently being performed
+        /// </summary>
         private readonly LinkedList<AdoNetUnitOfWork> _unitOfWorks = new LinkedList<AdoNetUnitOfWork>();
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="connectionString"></param>
         public AdoNetContext(string connectionString)
         {
             _connectionString = connectionString;
@@ -28,6 +44,10 @@ namespace CS3280_Assignment6.Repositories
             _connection.Open();
         }
 
+        /// <summary>
+        /// Will create a unit of work and add it to the list of units of work
+        /// </summary>
+        /// <returns></returns>
         public IUnitOfWork CreateUnitOfWork()
         {
             var transaction = _connection.BeginTransaction() as OleDbTransaction;
@@ -40,6 +60,10 @@ namespace CS3280_Assignment6.Repositories
             return uow;
         }
 
+        /// <summary>
+        /// creates a command for ado.net
+        /// </summary>
+        /// <returns>The command for use</returns>
         public OleDbCommand CreateCommand()
         {
             var cmd = _connection.CreateCommand() as OleDbCommand;
@@ -52,6 +76,10 @@ namespace CS3280_Assignment6.Repositories
             return cmd;
         }
 
+        /// <summary>
+        /// Removes a transaction when it is completed
+        /// </summary>
+        /// <param name="obj"></param>
         private void RemoveTransaction(AdoNetUnitOfWork obj)
         {
             _rwLock.EnterWriteLock();
@@ -59,6 +87,9 @@ namespace CS3280_Assignment6.Repositories
             _rwLock.ExitWriteLock();
         }
 
+        /// <summary>
+        /// closes the connection for use with IDisposable
+        /// </summary>
         public void Dispose()
         {
             _connection.Dispose();

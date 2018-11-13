@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace CS3280_Assignment6.Data_Access
 {
+    /// <summary>
+    /// Example class - NOT USED IN PROGRAM
+    /// </summary>
     public class DataAccess
     {
         /// <summary>

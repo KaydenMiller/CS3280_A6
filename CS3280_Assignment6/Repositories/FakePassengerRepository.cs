@@ -8,6 +8,9 @@ using CS3280_Assignment6.Models;
 
 namespace CS3280_Assignment6.Repositories
 {
+    /// <summary>
+    /// Used for testing
+    /// </summary>
     public class FakePassengerRepository : IRepository<Passenger>
     {
         private List<Passenger> _passengers = new List<Passenger>();

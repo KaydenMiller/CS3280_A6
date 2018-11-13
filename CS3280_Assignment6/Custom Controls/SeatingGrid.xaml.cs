@@ -23,8 +23,14 @@ namespace CS3280_Assignment6.CustomControls
     /// </summary>
     public partial class SeatingGrid : UserControl
     {
+        /// <summary>
+        /// The viewmodel for the seating grid
+        /// </summary>
         private SeatingGridViewModel SeatingGridViewModel { get; set; }
 
+        /// <summary>
+        /// Contstructor
+        /// </summary>
         public SeatingGrid()
         {
             InitializeComponent();
@@ -32,6 +38,12 @@ namespace CS3280_Assignment6.CustomControls
             DataContextChanged += OnDataContextChanged;
         }
 
+        /// <summary>
+        /// EventHandler for when the datacontext changes to a different aircraft
+        /// there may be a way to remove this now
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             // Cast Datacontext to Seating Grid View Model
@@ -40,6 +52,11 @@ namespace CS3280_Assignment6.CustomControls
             SeatingGridViewModel.PropertyChanged += UpdateView;
         }
 
+        /// <summary>
+        /// Update the view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void UpdateView(object sender, PropertyChangedEventArgs e)
         {
             ClearData();
@@ -53,12 +70,23 @@ namespace CS3280_Assignment6.CustomControls
             }
         }
 
+        /// <summary>
+        /// Clear data
+        /// </summary>
         private void ClearData()
         {
             SeatingLayoutGrid.ColumnDefinitions.Clear();
             SeatingLayoutGrid.Children.Clear();
         }
 
+        // The following section of code is used for generation of the Control UI as different aircraft have 
+        // different numbers of seats in a differnt layout this will provide that flexiblity
+        #region UI_Generation
+
+        /// <summary>
+        /// Generates the view
+        /// </summary>
+        /// <returns></returns>
         private OperationResult GenerateView()
         {
             OperationResult operationResult = new OperationResult();
@@ -85,6 +113,12 @@ namespace CS3280_Assignment6.CustomControls
             return operationResult;
         }
 
+        /// <summary>
+        /// Generates the seats within the columns
+        /// </summary>
+        /// <param name="cols"></param>
+        /// <param name="aisles"></param>
+        /// <param name="seats"></param>
         private void GenerateSeats(int cols, int aisles, IEnumerable<SeatViewModel> seats)
         {
             int seatsInCol = (seats.Count() / cols);
@@ -116,6 +150,11 @@ namespace CS3280_Assignment6.CustomControls
             }
         }
 
+        /// <summary>
+        /// Generate the UI Columns
+        /// </summary>
+        /// <param name="cols"></param>
+        /// <param name="aisles"></param>
         private void GenerateColumns(int cols, int aisles)
         {
             for (int column = 0; column < cols; column++)
@@ -128,6 +167,11 @@ namespace CS3280_Assignment6.CustomControls
             }
         }
 
+        /// <summary>
+        /// Generate the Aisles
+        /// </summary>
+        /// <param name="cols"></param>
+        /// <param name="aisles"></param>
         private void GenerateAisles(int cols, int aisles)
         {
             ColumnDefinition colDef = new ColumnDefinition();
@@ -143,6 +187,9 @@ namespace CS3280_Assignment6.CustomControls
             }
         }
 
+        #endregion
+
+        // UI Routed Event for notifying the system that a seat has been selected and providing relivant information
         public delegate void SeatSelectedEventHandler(object sender, SeatSelectedEventArgs e);
         public event SeatSelectedEventHandler SeatSelected
         {
@@ -152,6 +199,11 @@ namespace CS3280_Assignment6.CustomControls
         public static readonly RoutedEvent SeatSelectedEvent = EventManager.RegisterRoutedEvent(
             "SeatSelected", RoutingStrategy.Bubble, typeof(SeatSelectedEventHandler), typeof(SeatingGrid));
 
+        /// <summary>
+        /// Event handler for when a seat within the control is selected
+        /// Will raise event to the UI and use the RoutedEvent system
+        /// </summary>
+        /// <param name="seatID"></param>
         private void OnSeatSelected(int seatID)
         {
             SeatingGridViewModel.SelectedSeatID = seatID;
@@ -170,8 +222,14 @@ namespace CS3280_Assignment6.CustomControls
         }
     }
 
+    /// <summary>
+    /// Class for the seatSelected RoutedEvent
+    /// </summary>
     public class SeatSelectedEventArgs : RoutedEventArgs
     {
+        /// <summary>
+        /// The seatID
+        /// </summary>
         public int SeatID { get; set; }
 
         public SeatSelectedEventArgs(int seatID, RoutedEvent routedEvent) : base (routedEvent)

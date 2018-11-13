@@ -8,13 +8,24 @@ using System.Threading.Tasks;
 
 namespace CS3280_Assignment6.Repositories
 {
+    /// <summary>
+    /// Repository for flight links
+    /// </summary>
     public class FlightPassengerLinkRepository : Repository<FlightPassengerLink>
     {
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="context"></param>
         public FlightPassengerLinkRepository(AdoNetContext context) : base(context)
         {
 
         }
 
+        /// <summary>
+        /// Gets all flightlinks from the database
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<FlightPassengerLink> GetAll()
         {
             using (var command = Context.CreateCommand())
@@ -25,6 +36,11 @@ namespace CS3280_Assignment6.Repositories
             }
         }
 
+        /// <summary>
+        /// Maps the data from a record to an entitiy for use within the application
+        /// </summary>
+        /// <param name="record"></param>
+        /// <param name="entity"></param>
         protected override void Map(IDataRecord record, FlightPassengerLink entity)
         {
             entity.Flight_ID = (int)record["Flight_ID"];

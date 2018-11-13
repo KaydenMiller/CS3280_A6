@@ -9,23 +9,64 @@ using CS3280_Assignment6.ViewModels;
 
 namespace CS3280_Assignment6.Models
 {
+    /// <summary>
+    /// Data class to repressent all data assciated with an aircraft and flight
+    /// </summary>
     public class Aircraft
     {
+        /// <summary>
+        /// Represents the id of this object
+        /// </summary>
         public int ID { get; set; }
 
+        /// <summary>
+        /// Basic flight info provided by the database
+        /// </summary>
         private Flight _flightInfo { get; set; }
+        /// <summary>
+        /// The flight ID
+        /// </summary>
         public int Flight_ID { get; set; }
+        /// <summary>
+        /// The FlightNumber
+        /// </summary>
         public string Flight_Number { get; set; }
+        /// <summary>
+        /// The AircraftType
+        /// </summary>
         public string Aircraft_Type { get; set; }
 
+        /// <summary>
+        /// All passengers on this flight
+        /// </summary>
         public List<Passenger> Passengers { get; set; }
 
+        // The following 3 properties are for formating of the aircraft control and as of yet are arbatrary values (mostly)
+        /// <summary>
+        /// The total seats this aircraft has
+        /// </summary>
         public int TotalSeats { get; }
+        /// <summary>
+        /// The total number of columns of seats on this aircraft
+        /// </summary>
         public int Columns { get; set; }
+        /// <summary>
+        /// The number of walking aisles
+        /// </summary>
         public int Aisles { get; set; }
 
+        /// <summary>
+        /// A list of all seat viewModels for display within the custom seatingGrid control
+        /// </summary>
         public List<SeatViewModel> Seats { get; private set; } = new List<SeatViewModel>();
 
+        /// <summary>
+        /// Aircraft constructor
+        /// </summary>
+        /// <param name="flight"></param>
+        /// <param name="seats"></param>
+        /// <param name="cols"></param>
+        /// <param name="aisles"></param>
         public Aircraft(Flight flight, int seats, int cols, int aisles)
         {
             Passengers = new List<Passenger>();
@@ -68,6 +109,9 @@ namespace CS3280_Assignment6.Models
             }
         }
 
+        /// <summary>
+        /// Loads the passengers into the list of passengers for this aircraft from based on the passenger flight link in the database
+        /// </summary>
         public void LoadPassengers()
         {
             var query =
@@ -79,6 +123,11 @@ namespace CS3280_Assignment6.Models
             Passengers.AddRange(query);
         }
 
+        /// <summary>
+        /// Determines the passengers seat number
+        /// </summary>
+        /// <param name="passenger"></param>
+        /// <returns></returns>
         public string GetPassengerSeatID(Passenger passenger)
         {
             if (Passengers == null || passenger == null)
@@ -100,6 +149,10 @@ namespace CS3280_Assignment6.Models
             return linkQuery.ToList()[0].Seat_Number.ToString();
         }
 
+        /// <summary>
+        /// Which seats on this aircraft are filled
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<int> GetFilledSeats()
         {
             var query =
